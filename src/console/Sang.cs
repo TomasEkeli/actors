@@ -11,20 +11,14 @@ public class Sang : IActor
         if (context.Message is Started started)
         {
             var system = context.System;
-            var knutsen = system
-                .Root
-                .Spawn(
-                    Props
-                    .FromProducer(() =>
+
+            system.Root.Send(
+                target: system.Root.Spawn(
+                    Props.FromProducer(() =>
                         new Ludvigsen()
                     )
-                );
-
-            system
-                .Root
-                .Send(
-                    knutsen,
-                    new StartSangen());
+                ),
+                message: new StartSangen());
         }
 
         return Task.CompletedTask;
