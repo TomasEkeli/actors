@@ -10,10 +10,8 @@ public class Sang : IActor
     {
         if (context.Message is Started started)
         {
-            var system = context.System;
-
-            system.Root.Send(
-                target: system.Root.Spawn(
+            context.Send(
+                target: context.Spawn(
                     Props.FromProducer(() =>
                         new Ludvigsen()
                     )

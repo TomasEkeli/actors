@@ -10,7 +10,8 @@ public class Knutsen() : IActor
     {
         if (context.Message is Hallo hallo)
         {
-            Console.WriteLine("Hallo!");
+            Console.WriteLine(
+                $"{context.Actor}:\tHallo!");
 
             context.Send(
                 hallo.fra,
@@ -19,7 +20,8 @@ public class Knutsen() : IActor
 
         if (context.Message is HvordanStårDetTil stårTil)
         {
-            Console.WriteLine("Bare bra!");
+            Console.WriteLine(
+                $"{context.Actor}:\tBare bra!");
 
             context.Send(
                 stårTil.fra,
@@ -28,7 +30,8 @@ public class Knutsen() : IActor
 
         if (context.Message is HeiPåDeg)
         {
-            Console.WriteLine("Hei på deg, Ludvigsen!");
+            Console.WriteLine(
+                $"{context.Actor}:\tHei på deg, Ludvigsen!");
         }
 
         return Task.CompletedTask;

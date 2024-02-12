@@ -9,23 +9,21 @@ public class Ludvigsen : IActor
     {
         if (context.Message is StartSangen start)
         {
-            Console.WriteLine("Hallo?");
-
-            var props = Props.FromProducer(
-                () => new Knutsen()
-            );
-            var knutsen = context
-                .System
-                .Root
-                .Spawn(props);
+            Console.WriteLine(
+                $"{context.Actor}:\tHallo?");
 
             context.Send(
-                knutsen,
+                context.Spawn(
+                    Props.FromProducer(
+                        () => new Knutsen()
+                    )
+                ),
                 new Hallo(context.Self));
         }
         if (context.Message is Hallo hallo)
         {
-            Console.WriteLine("Hvordan står det til?");
+            Console.WriteLine(
+                $"{context.Actor}:\tHvordan står det til?");
 
             context.Send(
                 hallo.fra,
@@ -33,7 +31,8 @@ public class Ludvigsen : IActor
         }
         if (context.Message is HeiPåDeg hei)
         {
-            Console.WriteLine("Hei på deg!");
+            Console.WriteLine(
+                $"{context.Actor}:\tHei på deg!");
 
             context.Send(
                 hei.fra,
