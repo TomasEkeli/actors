@@ -1,27 +1,30 @@
 using Proto;
 
+namespace KnutsenOgLudvigsen;
+
 public class Sang : IActor
 {
-    PID _knutsen;
-
-    ActorSystem _system;
-
     public Task ReceiveAsync(
         IContext context
     )
     {
-        Console.WriteLine("sang: got msg");
         if (context.Message is Started started)
         {
-            _system = context.System;
-            var knutsenP = Props.FromProducer(() => new Knutsen());
-            _knutsen = _system.Root.Spawn(knutsenP);
+            var system = context.System;
+            var knutsen = system
+                .Root
+                .Spawn(
+                    Props
+                    .FromProducer(() =>
+                        new Ludvigsen()
+                    )
+                );
 
-            _system.Root.Send(_knutsen, new StartSangen());
-        }
-        if (context.Message is Hallo hallo && hallo.first)
-        {
-            Console.WriteLine("response");
+            system
+                .Root
+                .Send(
+                    knutsen,
+                    new StartSangen());
         }
 
         return Task.CompletedTask;

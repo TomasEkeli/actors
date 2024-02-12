@@ -1,28 +1,36 @@
 using Proto;
 
-public class Knutsen : IActor
+namespace KnutsenOgLudvigsen;
+
+public class Knutsen() : IActor
 {
-    PID _ludvigsen;
-
     public Task ReceiveAsync(
-        IContext context)
+        IContext context
+    )
     {
-        if (context.Message is StartSangen start)
-        {
-            Console.WriteLine("Hallo?");
-
-            var props = Props.FromProducer(
-                () => new Ludvigsen()
-            );
-            _ludvigsen = context.System.Root.Spawn(props);
-
-            context.Send(_ludvigsen, new Hallo(true));
-        }
         if (context.Message is Hallo hallo)
         {
-            Console.WriteLine("Hvordan står det til?");
+            Console.WriteLine("Hallo!");
 
+            context.Send(
+                hallo.fra,
+                new Hallo(context.Self));
         }
+
+        if (context.Message is HvordanStårDetTil stårTil)
+        {
+            Console.WriteLine("Bare bra!");
+
+            context.Send(
+                stårTil.fra,
+                new HeiPåDeg(context.Self));
+        }
+
+        if (context.Message is HeiPåDeg)
+        {
+            Console.WriteLine("Hei på deg, Ludvigsen!");
+        }
+
         return Task.CompletedTask;
     }
 }

@@ -1,10 +1,13 @@
+using Proto;
+
+namespace KnutsenOgLudvigsen;
 
 public record StartSangen();
-public record Hallo(bool first);
+public record Hallo(PID fra);
 
-public record StårTil();
+public record HvordanStårDetTil(PID fra);
 
-public record BareBra();
+public record BareBra(PID fra);
 
-public record HeiPåDeg(bool first);
+public record HeiPåDeg(PID fra);
 
